@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+export PYTHONPATH=/app
+
 # DB 마이그레이션 실행
 alembic upgrade head
 

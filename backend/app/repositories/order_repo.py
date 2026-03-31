@@ -32,6 +32,15 @@ class OrderRepo:
         )
         return list(result.scalars().all())
 
+    async def get_by_store(self, store_id: uuid.UUID) -> list[Order]:
+        result = await self.db.execute(
+            select(Order)
+            .options(selectinload(Order.items))
+            .where(Order.store_id == store_id)
+            .order_by(Order.created_at)
+        )
+        return list(result.scalars().all())
+
     async def get_by_table(self, store_id: uuid.UUID, table_id: uuid.UUID) -> list[Order]:
         result = await self.db.execute(
             select(Order)

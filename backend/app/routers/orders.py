@@ -27,6 +27,16 @@ async def create_order(
     )
 
 
+@router.get("", response_model=list[OrderResponse])
+async def get_store_orders(
+    current_user: dict = Depends(get_current_admin),
+    db: AsyncSession = Depends(get_db),
+):
+    """관리자: 매장 전체 주문 조회"""
+    service = OrderService(db)
+    return await service.get_orders_by_store(current_user["store_id"])
+
+
 @router.get("/table/{table_id}", response_model=list[OrderResponse])
 async def get_table_orders(
     table_id: uuid.UUID,

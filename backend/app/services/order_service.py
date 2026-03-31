@@ -129,6 +129,9 @@ class OrderService:
             table_id=table_id,
         )
 
+    async def get_orders_by_store(self, store_id: uuid.UUID) -> list[Order]:
+        return await self.order_repo.get_by_store(store_id)
+
     async def get_orders_by_session(self, store_id: uuid.UUID, session_id: uuid.UUID) -> list[Order]:
         return await self.order_repo.get_by_session(store_id, session_id)
 
